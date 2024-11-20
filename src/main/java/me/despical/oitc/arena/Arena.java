@@ -23,6 +23,7 @@ import me.despical.commons.serializer.InventorySerializer;
 import me.despical.oitc.ConfigPreferences;
 import me.despical.oitc.Main;
 import me.despical.oitc.api.StatsStorage;
+import me.despical.oitc.api.events.game.OITCGameEndEvent;
 import me.despical.oitc.api.events.game.OITCGameStartEvent;
 import me.despical.oitc.api.events.game.OITCGameStateChangeEvent;
 import me.despical.oitc.arena.managers.GameBarManager;
@@ -471,8 +472,11 @@ public class Arena extends BukkitRunnable {
 				setArenaState(ArenaState.RESTARTING);
 				break;
 			case RESTARTING:
+				OITCGameEndEvent endEvent = new OITCGameEndEvent(this, new HashSet<>(players));
 				plugin.getUserManager().getUsers(this).forEach(user -> user.setSpectator(false));
 				players.clear();
+
+				plugin.getServer().getPluginManager().callEvent(endEvent);
 
 				if (plugin.getOption(ConfigPreferences.Option.BUNGEE_ENABLED)) {
 					final ArenaRegistry arenaRegistry = plugin.getArenaRegistry();

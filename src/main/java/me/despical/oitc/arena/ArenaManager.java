@@ -122,10 +122,10 @@ public class ArenaManager {
 			InventorySerializer.saveInventoryToFile(plugin, player);
 		}
 
-		user.cacheScoreboard();
+		//user.cacheScoreboard();
 
 		arena.addPlayer(player);
-		arena.getScoreboardManager().createScoreboard(player);
+		//arena.getScoreboardManager().createScoreboard(player);
 
 		player.setLevel(0);
 		player.setExp(0);
